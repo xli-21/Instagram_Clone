@@ -6,17 +6,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Register</title>
+<title>editPerson</title>
 </head>
 <body>
 	<h1>Register</h1>
-	<form:form method="POST" modelAttribute="register">
+	<form:form method="POST" modelAttribute="editPerson">
 		<table>
-			<tr>
-				<td><label>username</label></td>
-				<td><form:input type="text" path="username" id="username" />
-					<form:errors path="username" style="color:red" /></td>
-			</tr>
 			<tr>
 				<td><label>password</label></td>
 				<td><form:input type="text" path="password" id="password" /> <form:errors

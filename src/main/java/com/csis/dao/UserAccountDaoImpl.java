@@ -20,6 +20,7 @@ public class UserAccountDaoImpl {
 	
 	private final String SQL_INSERT = "INSERT INTO USERS (username,password,firstname,lastname,email) VALUES (?,?,?,?,?)";
 	private final String SQL_SEARCH = "SELECT * FROM USERS WHERE username='" ;
+	private final String SQL_UPDATE = "UPDATE USERS SET password = ? , firstname = ? , lastname = ?, email = ? WHERE username = ?";
 	
 	@Autowired
 	public UserAccountDaoImpl(DataSource dataSource) {
@@ -35,5 +36,9 @@ public class UserAccountDaoImpl {
 		List<UserAccount> users = jdbcTemplate.query(SQL_SEARCH + login.getUsername() + "' and password='" + login.getPassword()
 	    + "'", new UserAccountMapper());
 		return users.size() > 0 ? users.get(0) : null;
+	}
+	
+	public int editUser(UserAccount oldUser) {
+		return jdbcTemplate.update(SQL_UPDATE, oldUser.getPassword(), oldUser.getFirstname(), oldUser.getLastname(), oldUser.getEmail(), oldUser.getUsername());
 	}
 }

@@ -32,7 +32,7 @@ public class RegisterController{
 		 userDaoImpl.registerUser(user);
 		 model.addAttribute("messages", "Account successfully created");
 		
-		 return "login";
+		 return "redirect:login";
 	 }
 	
 }
