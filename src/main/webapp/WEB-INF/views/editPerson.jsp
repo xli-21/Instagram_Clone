@@ -9,9 +9,13 @@
 <title>editPerson</title>
 </head>
 <body>
-	<h1>Register</h1>
+	<h1>editPerson</h1>
 	<form:form method="POST" modelAttribute="editPerson">
 		<table>
+			<tr>
+				<td><form:input type="hidden" path="username" id="username" />
+					<form:errors path="username" style="color:red" /></td>
+			</tr>
 			<tr>
 				<td><label>password</label></td>
 				<td><form:input type="text" path="password" id="password" /> <form:errors
@@ -24,12 +28,12 @@
 			</tr>
 			<tr>
 				<td><label>lastname</label></td>
-				<td><form:input type="text" path="lastname" id="lastname" /> <form:errors 
+				<td><form:input type="text" path="lastname" id="lastname"  /> <form:errors 
 						path="lastname" style="color:red" /></td>
 			</tr>
 			<tr>
 				<td><label>email</label></td>
-				<td><form:input type="email" path="email" id="email" /> <form:errors
+				<td><form:input type="email" path="email" id="email"  /> <form:errors
 						path="email" style="color:red" /></td>
 			</tr>
 			<tr>

@@ -15,6 +15,8 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import com.csis.dao.UserAccountDaoImpl;
 import com.csis.model.UserAccount;
 
+@Controller
+@RequestMapping("/editPerson")
 public class EditPersonInfoController {
 	@Autowired
 	UserAccountDaoImpl userDaoImpl;
@@ -25,6 +27,10 @@ public class EditPersonInfoController {
 			Map<String, Object> map=((Map<String, Object>) RequestContextUtils.getInputFlashMap(request));
 			UserAccount user = (UserAccount) map.get("account");
 			model.addAttribute("editPerson", user);
+			model.addAttribute("username", user.getUsername());
+			model.addAttribute("firstname", user.getFirstname());
+			model.addAttribute("lastname", user.getLastname());
+			model.addAttribute("email", user.getEmail());
 			return "editPerson";
 	}
 		
@@ -33,8 +39,8 @@ public class EditPersonInfoController {
 			if (result.hasErrors()) {
 				return "editPerson";
 			}
-			userDaoImpl.registerUser(user);
-			model.addAttribute("messages", "Account successfully created");
+			userDaoImpl.editUser(user);
+			model.addAttribute("messages", "Account successfully edited");
 			
 		 return "redirect:login";
 	}
