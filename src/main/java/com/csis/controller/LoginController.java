@@ -13,21 +13,27 @@ import com.csis.model.Login;
 import com.csis.model.UserAccount;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
 
 	@Autowired
 	UserAccountDaoImpl userDaoImpl;
 	
-	@RequestMapping(method = RequestMethod.GET)
-	 public String newProfile(ModelMap model) {
+
+	@RequestMapping("/")
+	public String indexPage() throws Exception {
+		return "redirect:login";   
+	}
+	
+	//controllers for login
+	@RequestMapping(value = "login", method = RequestMethod.GET)
+	 public String showLogin(ModelMap model) {
 		 Login login = new Login();
 		 model.addAttribute("login", login);
 		 return "login";
 	 }
 	
-	@RequestMapping(method = RequestMethod.POST)
-	 public String saveProfile(Login login, BindingResult result, ModelMap model,RedirectAttributes attr) {
+	@RequestMapping(value = "login",method = RequestMethod.POST)
+	 public String login(Login login, BindingResult result, ModelMap model,RedirectAttributes attr) {
 		 
 		UserAccount user = userDaoImpl.loginUser(login);
 		
@@ -38,7 +44,28 @@ public class LoginController {
 		else {
 			model.addAttribute("messages", "wrong username or password");
 			attr.addFlashAttribute("account", user);
-			return "redirect:profile";
+			return "redirect:mainPage";
 		}
 	 }
+	
+	//controllers for register
+	@RequestMapping(value = "register" , method = RequestMethod.GET)
+	 public String showRegister(ModelMap model) {
+		 UserAccount user = new UserAccount();
+		 model.addAttribute("register", user);
+		 return "register";
+	 }
+	
+	@RequestMapping(value = "register" , method = RequestMethod.POST)
+	 public String register(UserAccount user, BindingResult result, ModelMap model) {
+		 if (result.hasErrors()) {
+			 return "register";
+		 }
+		 userDaoImpl.registerUser(user);
+		 model.addAttribute("messages", "Account successfully created");
+		
+		 return "redirect:login";
+	 }
+	
+	
 }

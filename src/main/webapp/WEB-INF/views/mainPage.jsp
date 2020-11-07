@@ -6,22 +6,17 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Profile</title>
+<title>MainPage</title>
 
 </head>
 <body>
-	<h1>Profile</h1>
+	<h1>MainPage</h1>
 	<h2>${messages}</h2>
-	<form:form method="POST" modelAttribute="profile">
+	<form:form method="POST" modelAttribute="mainPage">
 		<table>
 			<tr>
-				<td>Hi,</td>
-			</tr>
-			<tr>
-				<td>${name}</td>
-			</tr>
-			
-			<tr>			
+				<td>Hi, ${name}</td>
+					
 				<td><input type="submit" name="action" value="edit" /></td>
 			</tr>
 		</table>

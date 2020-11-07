@@ -24,7 +24,8 @@
 				<td><form:input type="text" path="password" id="password" /> <form:errors
 						path="password" style="color:red" /></td>
 			<tr>
-				<td colspan="2"><input type="submit" value="Submit"></td>
+				<td><input type="submit" value="Login"></td>
+				<td><input type="button"  onclick="location.href='register'" value="Register" ></td>
 			</tr>
 		</table>
 	</form:form>

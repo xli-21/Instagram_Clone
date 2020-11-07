@@ -22,7 +22,7 @@ public class EditPersonInfoController {
 	UserAccountDaoImpl userDaoImpl;
 		
 	@RequestMapping(method = RequestMethod.GET)
-		public String newProfile(ModelMap model, HttpServletRequest request) {
+		public String showEditPage(ModelMap model, HttpServletRequest request) {
 			@SuppressWarnings("unchecked")
 			Map<String, Object> map=((Map<String, Object>) RequestContextUtils.getInputFlashMap(request));
 			UserAccount user = (UserAccount) map.get("account");
@@ -35,7 +35,7 @@ public class EditPersonInfoController {
 	}
 		
 	@RequestMapping(method = RequestMethod.POST)
-		public String saveProfile(UserAccount user, BindingResult result, ModelMap model) {
+		public String edit(UserAccount user, BindingResult result, ModelMap model) {
 			if (result.hasErrors()) {
 				return "editPerson";
 			}
