@@ -2,7 +2,7 @@
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page isELIgnored="false" %>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
@@ -32,7 +32,7 @@
 				<tr>
 					<td>
 						<a href="${pageContext.request.contextPath}/editPhoto/?id=${image.id}">
-							<img src = "${image.getFileLocation()}"  style="height:200px;border: 1px solid #ddd;border-radius: 4px;padding: 5px;">
+							<img src = "${image.getFileLocation()}"  style="max-height:500px;max-width:300px;border: 1px solid #ddd;border-radius: 4px;padding: 5px;">
 						</a>
 					</td>
 				</tr>

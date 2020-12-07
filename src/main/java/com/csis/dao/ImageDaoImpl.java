@@ -26,6 +26,7 @@ public class ImageDaoImpl {
 	private final String SQL_UPDATE = "UPDATE IMAGE SET DESC = ? WHERE ID = ?";
 	private final String SQL_DELETE= "DELETE FROM IMAGE WHERE ID = ?";
 	private final String SQL_COMMENTS = "SELECT * FROM COMMENT WHERE IMAGEID = ?";
+	private final String SQL_INSERT_COMMENT = "INSERT INTO COMMENT(IMAGEID,USERNAME,TEXT) VALUES (?,?,?)";
 	
 	@Autowired
 	public ImageDaoImpl(DataSource dataSource) {
@@ -37,7 +38,7 @@ public class ImageDaoImpl {
 	}
 
 	public List<Image> loadImage(String username) {
-		return jdbcTemplate.query(SQL_SEARCH_USERNAME, new Object[] {username}, new ImageMapper());
+		return jdbcTemplate.query(SQL_SEARCH_USERNAME, new ImageMapper(), new Object[] {username});
 	}
 
 	public Image loadImageById(int id) {
@@ -54,7 +55,10 @@ public class ImageDaoImpl {
 	}
 	
 	public List<Comment> loadComment(int imageId) {
-		return jdbcTemplate.query(SQL_COMMENTS, new Object[] {imageId}, new CommentMapper());
+		return jdbcTemplate.query(SQL_COMMENTS, new CommentMapper(), new Object[] {imageId});
 	}
 
+	public boolean addComment(int imageId, String username, String text) {
+		return jdbcTemplate.update(SQL_INSERT_COMMENT, imageId, username, text) > 0;
+	}
 }

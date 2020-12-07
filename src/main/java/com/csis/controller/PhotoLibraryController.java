@@ -1,7 +1,9 @@
 package com.csis.controller;
 
 import java.io.File;
+
 import java.io.IOException;
+
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -10,9 +12,11 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -111,11 +115,19 @@ public class PhotoLibraryController {
 		
 		UserAccount user1 = (UserAccount) session.getAttribute("user");
 		
-		String localPath="D:\\File\\";
-	  
+		String folder = "D:/File/";
+		
+		File imageFolder = new File(folder);
+		
 	    String fileName=null;
 	    
+	 
+			
+			
 		if(!file.isEmpty()){
+			
+			
+			
 			
 			String uuid = UUID.randomUUID().toString().replaceAll("-","");
 			
@@ -125,23 +137,38 @@ public class PhotoLibraryController {
 			
 
 			fileName = uuid+"." + imageSuffix;
-	        
-			file.transferTo(new File(localPath+fileName));
 			
+			
+			File newfile = new File(imageFolder, fileName);
+			
+			if(!newfile.getParentFile().exists()) {
+				newfile.getParentFile().mkdirs();
+			}
+			
+			file.transferTo(newfile);
+			
+			String imageURL = "http://localhost:8080/api/file/"+newfile.getName();
+
+
 			Date date = new Date();  
 			Timestamp timeStamp = new Timestamp(date.getTime());  
 			Image newImage = new Image();
 			newImage.setUsername(user1.getUsername());
-			newImage.setFileLocation(localPath+fileName);
+			newImage.setFileLocation(imageURL);
 			newImage.setUploadDate(timeStamp);
 			newImage.setDesc(description);
 			imageDaoImpl.saveImage(newImage);
+			
+			
 			model.addAttribute("messages", "Successful post");
-			return "redirect:photoLibrary";
+			return "redirect:/photoLibrary";
+			
 		}
 		else {
 			model.addAttribute("messages", "Post failed");
-			return "upload";
+			return "/upload";
 		}		
+		
+	
 	}
 }
