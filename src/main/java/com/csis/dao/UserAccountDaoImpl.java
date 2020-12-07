@@ -23,6 +23,7 @@ public class UserAccountDaoImpl {
 	private final String SQL_INSERT = "INSERT INTO USERS (username,password,firstname,lastname,email) VALUES (?,?,?,?,?)";
 	private final String SQL_SEARCH = "SELECT * FROM USERS WHERE username='" ;
 	private final String SQL_UPDATE = "UPDATE USERS SET password = ? , firstname = ? , lastname = ?, email = ? WHERE username = ?";
+	private final String SQL_SEARCH_LIKE = "SELECT * FROM USERS WHERE username LIKE'" ;
 	
 	@Autowired
 	public UserAccountDaoImpl(DataSource dataSource) {
@@ -42,5 +43,11 @@ public class UserAccountDaoImpl {
 	
 	public int editUser(UserAccount oldUser) {
 		return jdbcTemplate.update(SQL_UPDATE, oldUser.getPassword(), oldUser.getFirstname(), oldUser.getLastname(), oldUser.getEmail(), oldUser.getUsername());
+	}
+
+
+	public List<UserAccount> searchLikeUser(String search) {
+		List<UserAccount> users = jdbcTemplate.query(SQL_SEARCH_LIKE + "%" + search + "%'", new UserAccountMapper());
+		return users;
 	}
 }
